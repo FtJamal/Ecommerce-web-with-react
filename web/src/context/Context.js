@@ -15,8 +15,8 @@ let data = {//these value goes to state
   isLogin: null,
   darkTheme: true,
   myNum : 1,
-  baseUrl: (window.location.href.indexOf("https") === -1) ? "http://localhost:5001" : "https://firebase-storage-bucket.herokuapp.com"
-}
+  baseUrl: (window.location.href.indexOf("https") === -1) ? "http://localhost:5001" : "https://handsome-twill-ray.cyclic.app"}
+
 
 
 export default function ContextProvider({ children }) {
