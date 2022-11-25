@@ -1,9 +1,9 @@
-import express from "express"
-import cors from "cors"
-import mongoose from 'mongoose';
-import { stringToHash, varifyHash } from "bcrypt-inzi";
-import jwt from 'jsonwebtoken';
-import cookieParser from "cookie-parser";
+import express from "express"  //use on the top of node(to make server) to build rest api
+import cors from "cors" // controls cross origin request
+import mongoose from 'mongoose'; // to establish connection b/w mongodb & our express app
+import { stringToHash, varifyHash } from "bcrypt-inzi"; //to convert plain password into hash b4 we save them in our database
+import jwt from 'jsonwebtoken';// to create token for authentication purpose
+import cookieParser from "cookie-parser"; // method to store cookie
 
 // mongoose.connect('mongodb+srv://abc:abc@cluster0.uhv9f8j.mongodb.net/?retryWrites=true&w=majority');
 
@@ -48,7 +48,7 @@ var upload = multer({ storage: storageConfig })
 //==============================================
 
 const app = express();
-app.use(express.json());  // parsing body
+app.use(express.json());  // parsing body //
 app.use(cookieParser());  //parsing cookie
 app.use(cors({
     origin: ['http://localhost:3000', 'https://ecomwebwithcart.netlify.app', "*"],
@@ -87,12 +87,10 @@ const productSchema = new mongoose.Schema({
 const productModel = mongoose.model('product', productSchema);
 
 const cartSchema = new mongoose.Schema({
-    userId: {
-        type: Object,
-    },
+    userId: { type: Object },
     items: [{
         productId: {type: String}, 
-        // name: String,
+
         name: { type: String, required: true },
         quantity: {
             type: Number,
@@ -101,7 +99,7 @@ const cartSchema = new mongoose.Schema({
             default: 1
         },
         price: { type: Number, required: true },
-        // price: Number
+
     }],
     bill: {
         type: Number,
@@ -277,13 +275,13 @@ app.post("/login", (req, res) => {
                                 _id: data._id,
                                 email: data.email,
                                 iat: Math.floor(Date.now() / 1000) - 30,
-                                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+                                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 1 day
                             }, SECRET);
 
                             console.log("token :", token);
 
                             res.cookie('Token', token, {
-                                maxAge: 86_400_000,
+                                maxAge: 86_400_000, //miliseconds = 24hrs
                                 httpOnly: true
                             });
 
